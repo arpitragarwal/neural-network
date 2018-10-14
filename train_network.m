@@ -61,15 +61,15 @@ for j = 1:n_epochs
         W_layer_2 = W_layer_2 + eta * out_layer_1_w_pad' * delta_output;
     end
     
-    error(j) = mean(abs(y - record_out));
+    error(j) = mean(abs(y - record_out))*100;
 end
 
 plot_error = 1;
 if plot_error
     figure()
     plot(error)
-    ylim([0 0.5])
-    ylabel('Error')
+    ylim([0 50])
+    ylabel('Error%')
     xlabel('# of epochs')
     grid on
 end

@@ -4,7 +4,7 @@ filename = 'data/sonar.arff.txt';
 [data, metadata] = read_arff_file(filename);
 n_features = size(data, 2) - 1;
 
-learning_rate = 0.1;
+learning_rate = 0.01;
 n_epochs = 100;
 eta = learning_rate;
 
@@ -32,7 +32,8 @@ network = train_network(data_mat, y, network, n_epochs, eta);
 output = test_network(data_mat, network);
 
 %%
-% figure()
-% plot(output > 0.5, 'o-', 'LineWidth', 0.1)
-% hold on
-% plot(y)
+figure()
+plot(output > 0.5, 'o-', 'LineWidth', 0.1)
+hold on
+plot(y)
+movegui('southeast')
