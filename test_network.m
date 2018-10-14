@@ -1,4 +1,4 @@
-function output = test_network(data, network)
+function [output, error] = test_network(data, network, y)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
 W_layer_1 = network.W_layer_1;
@@ -26,5 +26,6 @@ for i = 1:size(data, 1)
     net_2 = out_layer_1_w_pad' * W_layer_2';
     output(i) = sigmoid(net_2);
 end
+error = mean(abs(y - output))*100;
 end
 

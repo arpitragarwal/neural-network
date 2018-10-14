@@ -64,8 +64,8 @@ for j = 1:n_epochs
     error(j) = mean(abs(y - record_out))*100;
 end
 
-plot_error = 1;
-if plot_error
+plot_training_error = 0;
+if plot_training_error
     figure()
     plot(error)
     ylim([0 50])
