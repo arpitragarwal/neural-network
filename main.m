@@ -29,9 +29,10 @@ network.length_output_layer = 1;
 
 network = train_network(data_mat, y, network, n_epochs, eta);
 
-output = test_network(data_mat, network, y);
+output = test_network(data_mat, network);
+
 %%
-figure()
-plot(output)
-hold on
-plot(y)
+% figure()
+% plot(output > 0.5, 'o-', 'LineWidth', 0.1)
+% hold on
+% plot(y)
