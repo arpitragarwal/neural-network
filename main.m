@@ -2,7 +2,7 @@ clear; clc; close all;
 
 learning_rate = 0.1;
 n_epochs = 100;
-n_folds = 10;
+n_folds = 5;
 
 filename = 'data/sonar.arff.txt';
 [data, metadata] = read_arff_file(filename);
@@ -33,7 +33,9 @@ data_w_label = [data_mat, y'];
 % sort the data with respect to the labels
 n_attributes = size(data_mat, 2);
 no_data_points = size(data_w_label, 1);
-data_w_label = sort(data_w_label, n_attributes + 1);
+[~,idx] = sort(data_w_label(:,end)); % sort just the labels
+data_w_label = data_w_label(idx, :);   % sort the whole matrix using the sort indices
+%data_w_label = sort(data_w_label, n_attributes + 1);
 
 pos_indices_tot = find(y==1);
 neg_indices_tot = find(y==0);
@@ -72,9 +74,9 @@ end
 %%
 for i = 1:n_folds
     test_indices = indices_set{i};
-    training_indices = setdiff([1:no_data_points], test_indices);
-    data_set = data_mat(training_indices, :);
-    y_set    = y(training_indices);
+    training_indices{i} = setdiff([1:no_data_points], test_indices);
+    data_set = data_mat(training_indices{i}, :);
+    y_set    = y(training_indices{i});
     data_test = data_mat(test_indices, :);
     y_test    = y(test_indices);
 
@@ -83,6 +85,8 @@ for i = 1:n_folds
     [output{i}, error(i)] = test_network(data_test, network, y_test);
 end
 %%
+print_predictions(output, indices_set, labels, metadata)
+%%
 figure()
 plot(error)
 hold on
@@ -90,7 +94,7 @@ plot([0, n_folds], [mean(error), mean(error)])
 
 % %%
 % figure()
-% plot(output > 0.5, 'o-', 'LineWidth', 0.1)
+% plot(output >= 0.5, 'o-', 'LineWidth', 0.1)
 % hold on
 % plot(y)
 % movegui('southeast')
