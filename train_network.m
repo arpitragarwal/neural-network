@@ -8,6 +8,7 @@ length_hidden_layer = network.length_hidden_layer;
 length_output_layer = network.length_output_layer;
 
 no_bias = 0;
+loss_function = 'cross_entropy';
 if no_bias
     W_layer_1 = 1 - 2*rand(length_hidden_layer, length_input_layer);
     W_layer_2 = 1 - 2*rand(length_output_layer, length_hidden_layer);
@@ -46,8 +47,13 @@ for j = 1:n_epochs
         record_out(index) = output > 0.5;
         
         % backward propagation
-        delta_output = output.*(1 - output).*(y(index) - output);
-        
+        if strcmp(loss_function, 'cross_entropy')
+            delta_output = y(index) - output;
+            %delta_output = -delta_output;
+        else
+            delta_output = output.*(1 - output).*(y(index) - output);
+        end
+
         sum_delta_k_w_kj = W_layer_2'.*delta_output;
         delta_hidden = out_layer_1_w_pad.*(1 - out_layer_1_w_pad).*(sum_delta_k_w_kj);
         
