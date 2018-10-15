@@ -13,9 +13,10 @@ for i = 1:n_folds
 
     network = train_network(data_set, y_set, network, n_epochs, eta);
 
-    [output{i}, error(i)] = test_network(data_test, network, y_test);
+    [output{i}, error_precent(i)] = test_network(data_test, network, y_test);
+    error_num(i) = error_precent(i)*length(y_test)/100;
 end
 
-mean_error = mean(error);
+mean_error = sum(error_num)/no_data_points;
 end
 

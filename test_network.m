@@ -3,6 +3,7 @@ function [output, error] = test_network(data, network, y)
 %   Detailed explanation goes here
 W_layer_1 = network.W_layer_1;
 W_layer_2 = network.W_layer_2;
+threshold = 0.5;
 
 for i = 1:size(data, 1)
     input = data(i, :)';
@@ -25,7 +26,8 @@ for i = 1:size(data, 1)
     end
     net_2 = out_layer_1_w_pad' * W_layer_2';
     output(i) = sigmoid(net_2);
+    out_label(i) = output(i) > threshold;
 end
-error = mean(abs(y - output))*100;
+error = mean(abs(y - out_label))*100;
 end
 
