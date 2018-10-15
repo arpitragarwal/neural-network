@@ -1,4 +1,4 @@
-function [data, metadata] = read_arff_file(filename)
+function [data_mat, y, labels, metadata] = read_arff_file(filename)
 %UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -64,4 +64,18 @@ metadata.attribute_names = attribute_names;
 metadata.attribute_values = attribute_values;
 metadata.dataset_name = dataset_name;
 fclose(fid);
+
+tmp = data(:, 1:end - 1);
+for i = 1:size(tmp, 1)
+    for j = 1:size(tmp, 2)
+        data_mat(i, j) = str2num(tmp{i, j});
+    end
+end
+labels = data(:, end);
+class_names = metadata.attribute_values{end};
+for i = 1:length(labels)
+    if strcmp(labels{i}, class_names{2})
+        y(i) = 1;
+    end
+end
 end
