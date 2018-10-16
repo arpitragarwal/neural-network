@@ -8,7 +8,8 @@ length_hidden_layer = network.length_hidden_layer;
 length_output_layer = network.length_output_layer;
 
 no_bias = 0;
-loss_function = 'cross_entropy';
+%loss_function = 'cross_entropy';
+loss_function = 'L2';
 if no_bias
     W_layer_1 = 1 - 2*rand(length_hidden_layer, length_input_layer);
     W_layer_2 = 1 - 2*rand(length_output_layer, length_hidden_layer);
@@ -20,9 +21,9 @@ net_layer_1 = zeros(length_hidden_layer, 1);
 
 no_data_points = size(data, 1);
 %indices = 1:no_data_points;
-
+indices = randsample(no_data_points, no_data_points);
 for j = 1:n_epochs
-    indices = randsample(no_data_points, no_data_points);
+    %indices = randsample(no_data_points, no_data_points);
 
     for i = 1:no_data_points
         index = indices(i);

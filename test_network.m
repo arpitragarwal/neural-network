@@ -4,11 +4,10 @@ function [output, error] = test_network(data, network, y)
 W_layer_1 = network.W_layer_1;
 W_layer_2 = network.W_layer_2;
 threshold = 0.5;
+no_bias = 0;
 
 for i = 1:size(data, 1)
     input = data(i, :)';
-
-    no_bias = 0;
     if no_bias
         input_w_pad = input;
     else
