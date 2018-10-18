@@ -1,3 +1,5 @@
 #!/bin/bash
-nohup matlab -nodisplay -logfile output -r "neural_net('$1', $2, $3, $4); exit" < /dev/null 
+cd src
+nohup matlab -nodisplay -logfile output -r "neural_net('../$1', $2, $3, $4); exit" < /dev/null 
 sed 1,10d output
+cd ../
